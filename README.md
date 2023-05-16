@@ -1,8 +1,25 @@
 # AWS and Cloud Computing
 
-### what is cloud computing?
+### What is cloud computing?
 
-Cloud computing is the on-demand access to computer services over the internet.
+- Cloud computing is the on-demand access to computer services over the internet
+- It provides computing power, data storage, etc...
+- It is pay as you go - cost effective
+- Provides scalability and accessibility
+- Manage many resources almost instantly
+- Advanced security
+- Simple to use
+
+Examples:
+
+- Email
+- Office 365
+- Dropbox, image hosting, GitHub
+- OneDrive, icloud, etc...
+- Social media
+- Content streaming service - Netflix, Disney +, Spotify, etc...
+- Steam, Epic games store, GoG Galaxy, etc...
+- F1/ sports -> analytics
 
 ----
 
@@ -36,13 +53,19 @@ As technologies and hypervisors improved, companies made the cloud's benefits av
 
 4. Security - using encryption makes things more secure.
 
-5. Mobility - allows use over phones as well as laptops and computers so can be updated instantly.
+5. Accessibility - allows use over phones as well as laptops and computers so can be updated instantly.
 
 6. Quality control - everyone has access to the same data which is stored in the same place so there is more consistency.
 
 7. Sustainability - the cloud is more environmentally friendly.
 
 8. Competitve edge - gives a competitive advantage as the most innovative tech available.
+
+9. No maintenance required
+
+10. Can go global easily
+
+11. Can take advantage of economies of scale
 
 ----
 
@@ -54,7 +77,7 @@ The main benefits of cloud computing for businesses are similar to those listed 
 
 2. Loss prevention - if you lose things on your computer, the information is safe on the cloud.
 
-3. Disaster recovery - Cloud based services provide quick data recovery.
+3. Reliability and disaster recovery - Cloud based services provide quick data recovery.
 
 4. Increased collaboration - Cloud computing makes working together easier.
 
@@ -96,7 +119,7 @@ Amazon had already had to build reliable and cost-effective data centers for the
 
 These are different ways to use the cloud.
 
-The image below illustrates what kind of services are provided with each model:
+The image below illustrates what kind of services are provided with each model (taken from leanix.net):
 
 ![alt](aas.png)
 
@@ -154,6 +177,8 @@ Below is a table to illustrate the differences between CapEx and OpEx (taken fro
 ![alt](expend.png)
 
 So they both have advantages and disadvantages.
+
+But from a business perspective, OpEx is better as it is pay-as-you-go rather than CapEx is flat spend.  You want to go from Capex to OpEx on the cloud.
 
 ----
 
