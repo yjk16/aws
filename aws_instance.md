@@ -61,6 +61,8 @@ Add a description = `My first security group`
 
 ![alt](security.png)
 
+----
+
 Under `Inbound security group rules`
 
 You can `Add security group rule`
@@ -100,13 +102,17 @@ Then:
 
 Grab the code under `Example` back on the AWS webpage:
 
+![alt](instance.png)
 
+----
 
 And paste this ssh key into your bash terminal:
 
-press 'yes' when it asks about the fingerprint:
+![alt](connect.png)
 
-You are now in the VM.
+press 'yes' when it asks about the fingerprint...
+
+And you are now in the VM.
 
 ----
 
