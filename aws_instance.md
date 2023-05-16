@@ -100,13 +100,11 @@ Then:
 
 Grab the code under `Example` back on the AWS webpage:
 
-![alt](instance.png)
+
 
 And paste this ssh key into your bash terminal:
 
 press 'yes' when it asks about the fingerprint:
-
-![alt](connect.png)
 
 You are now in the VM.
 
