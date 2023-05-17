@@ -1,5 +1,18 @@
 # AWS EC2
 
+### Table of contents:
+
+[1. Creating an Instance](https://github.com/yjk16/aws/blob/main/aws_instance.md#1-creating-an-instance)
+
+[2. To add a Bash script and provision Nginx installation](https://github.com/yjk16/aws/blob/main/aws_instance.md#2-to-add-a-bash-script-and-provision-nginx-installation)
+
+[3. To make a MongoDB AMI](https://github.com/yjk16/aws/blob/main/aws_instance.md#3-to-make-a-mongdb-ami)
+
+[4. Creating an AMI for the MongoDB installation](https://github.com/yjk16/aws/blob/main/aws_instance.md#4-creating-an-ami-for-the-mongodb-installation)
+
+[5. Deploying the Sparta app on EC2](https://github.com/yjk16/aws/blob/main/aws_instance.md#5-deploying-the-sparta-app-on-ec2)
+
+
 ### 1. Creating an Instance
 
 Log into the AWS console and make sure you are set to the Ireland (eu-west-1) region setting.
