@@ -1,5 +1,7 @@
 # AWS EC2
 
+### 1. Creating an Instance
+
 Log into the AWS console and make sure you are set to the Ireland (eu-west-1) region setting.
 
 ----
@@ -144,7 +146,7 @@ Don't forget to terminate your instance when you're done:
 
 ----
 
-### To add a Bash script and provision Nginx installation
+### 2. To add a Bash script and provision Nginx installation
 
 Go to `Advanced details` when launching an instance.
 
@@ -160,11 +162,15 @@ Once `2/2 checks passed` under `Status check`, click `Instance ID` and then `Con
 
 ----
 
-Copy the command under `Example` then open a Bash terminal.
+Copy the command under `Example` then open a Bash terminal:
+
+![alt](instance.png)
 
 If in .ssh directory, paste the code.  Enter 'yes' when asked about the fingerprint.
 
-This should take you into the instance.
+This should take you into the instance:
+
+![alt](connect.png)
 
 ----
 
@@ -210,7 +216,7 @@ Then you can terminate the Nginx instance.  And still use the template...
 
  ----
 
-### To make a MongoDB AMI
+### 3. To make a MongoDB AMI
 
 First make a MongoDB instance.
 
@@ -232,7 +238,7 @@ To check manually first, enter the following commands:
 
 ----
 
-### Creating an AMI for the MongoDB installation
+### 4. Creating an AMI for the MongoDB installation
 
 `Create launch template`
 
@@ -264,7 +270,7 @@ You can check this using:
 
 ----
 
-### Deploying the Sparta app on EC2
+### 5. Deploying the Sparta app on EC2
 
 In a Bash terminal cd into the directory where your app folder is:
 
@@ -339,8 +345,4 @@ Go to your instance and connect again by pasting your ssh key into Bash.
 You should be able to connect to the web browser through your instance.  If it is `https` get rid of the `s` and add `:3000`
 
 You should be connected to the Sparta App page.
-
-
-
-
 
