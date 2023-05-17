@@ -106,9 +106,7 @@ Grab the code under `Example` back on the AWS webpage:
 
 ----
 
-And paste this ssh key into your bash terminal:
-
-![alt](connect.png)
+And paste this into your bash terminal.
 
 press 'yes' when it asks about the fingerprint...
 
