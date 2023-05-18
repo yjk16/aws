@@ -305,9 +305,9 @@ You should be in the instance.
 
 Add the dependencies (same as when using Vagrant):
 
-`curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -`
+`curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
 
-`sudo apt-get install -y nodejs`
+`sudo apt-get install nodejs -y`
 
 `sudo npm install pm2 -g` if this doesn't work:
 
@@ -359,3 +359,209 @@ You should be able to connect to the web browser through your instance.  If it i
 
 You should be connected to the Sparta App page.
 
+----
+
+### 6. Making an AMI of the app
+<!-- 
+Under `Launch templates`, `Modify template`, give it a name and select a security group.
+
+Under `advanced details` go to `User data`.  It should already have the following:
+
+```
+#!/bin/bash
+
+sudo apt update -y
+
+sudo apt upgrade -y
+
+sudo apt install nginx -y
+
+sudo systemctl start nginx
+
+sudo systemctl enable nginx
+```
+
+Modify the script and add the following:
+
+`curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -`
+
+`sudo apt-get install -y nodejs`
+
+`sudo npm install pm2 -g`
+
+`cd app`
+
+`npm install`
+
+Save the template.
+
+----
+
+To test it, go to `Launch templates` and then `Launch instance from template` making sure to choose the correct version.
+
+Connect via ssh...
+
+ -->
+
+
+----
+
+Go to EC2 dashboard and launch an instance
+
+Go to My AMIs
+
+Open up db_image and fill out info including name, user data and check security group.
+
+```#!/bin/bash
+
+sudo apt update -y
+
+sudo apt upgrade -y
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927
+
+sudo apt install mongodb -y
+
+sudo systemctl start mongodb```
+
+launch instance
+
+connect to bash via ssh
+
+`ssh -i "tech230.pem" ubuntu@ec2-54-246-247-106.eu-west-1.compute.amazonaws.com`
+
+making sure to change the ip address.
+
+Should be in the instance.
+
+can go through checks manually
+
+check by entering:
+
+`sudo systemctl status mongodb`
+q to get out of that
+
+cd /etc
+
+ls
+
+sudo nano mongodg.conf
+
+change bind_ip to 0.0.0.0
+
+exit and save.
+
+then restart the mongo server:
+
+sudo systemctl restart mongodb
+
+sudo systemctl enable mongodb
+
+go back to AWS db machine
+
+in security, go to security groups
+
+edit inbound rules
+
+add rule
+
+change port range to `27017` and source to anywhere.
+
+----
+
+Launch an app instance by going to the app AMI
+
+in a Bash terminal, cd into directory where app folder is:
+
+then paste:
+
+`scp -i "~/.ssh/tech230.pem" -r app ubuntu@ec2-3-249-150-209.eu-west-1.compute.amazonaws.com:/home/ubuntu` (making sure to change the ip address) to copy app files into instance.
+
+Then connect via Bash using the ssh key:
+
+    ssh -i "~/.ssh/tech230.pem" ubuntu@ec2-54-216-148-79.eu-west-1.compute.amazonaws.com
+
+should be in instance
+
+
+may need:
+<!-- 
+`sudo apt update -y`
+
+`sudo apt upgrade -y`
+
+`sudo apt install nginx -y`
+
+`sudo systemctl start nginx`
+
+`sudo systemctl enable nginx`
+
+`sudo systemctl status nginx` -->
+
+ls to check app is there
+
+node --version
+
+to check node version.
+
+enter:
+
+export DB_HOST=mongodb://192.168.10.150:27017/posts
+
+but change the ip address.  Either from the db bash or on the AWS db instance page.
+
+printenv to check
+
+![alt](dbhost.png)
+
+cd into app
+
+npm install
+
+
+Database should be cleared and seeded:
+
+![alt](cleared.png)
+
+pm2 start app.js --update-env
+
+![alt](online.png)
+
+go to AWS app instance:
+
+go to public ip address
+
+
+
+----
+
+### Automating reverse proxy
+
+Set up an app instance, using a community version of Ubuntu.
+
+Connect to Bash using ssh key
+
+Now you are in the instance.
+
+ls
+
+should be empty
+
+create a file:
+
+`touch provision_app.sh`
+
+and enter the commands:
+
+```
+#!/bin/bash
+
+sudo apt-get update -y
+
+sudo apt-get upgrade -y
+
+sudo apt-get install nginx -y
+
+cd sudo nano /etc/nginx/sites-available/default
+
+sed 
