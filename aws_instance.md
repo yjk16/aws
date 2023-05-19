@@ -549,7 +549,9 @@ should be empty
 
 create a file:
 
-`touch provision_app.sh`
+`touch provisionapp.sh`
+
+`sudo nano provisionapp.sh`
 
 and enter the commands:
 
@@ -562,6 +564,23 @@ sudo apt-get upgrade -y
 
 sudo apt-get install nginx -y
 
-cd sudo nano /etc/nginx/sites-available/default
+sudo nano /etc/nginx/sites-available/default
 
-sed 
+sed -i 'try_files $uri $uri/ =404;proxy_pass http://localhost:3000;'
+
+sudo nginx -t
+
+sudo systemctl restart nginx
+
+----
+
+then
+
+`ls -l` to check permissions
+
+`chmod +x provisionapp.sh` to add execution permissions.
+
+`ls` should be green.
+
+`./provisionapp.sh` to execute app and run provision file.
+
