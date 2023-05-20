@@ -7,66 +7,45 @@ sudo apt-get upgrade -y
 sudo apt-get install nginx -y
 
 # set up reverse proxy
+# change text in default using sed command, replacing line starting with 'try_files' with line starting with 'proxy_pass'
+# can use '+' or any other symbol where '/' should be so as not to confuse with the other '/' signs. Or '\' but that can get confusing.
+sudo sed -i 's+try_files $uri $uri/ =404;+proxy_pass http://localhost:3000/;+' /etc/nginx/sites-available/default
 
-# make sure you're in the home directory
+# create global env variable (so app can connect to db)
+# > overwrites contents but >> adds to end of file
+sudo echo 'export DB_HOST=mongodb://<mongodb_private_ip_address>/posts' >> .bashrc
 
-cd /
+sudo systemctl restart nginx
 
-sudo nano /etc/nginx/sites-available/default
+sudo systemctl enable nginx
 
-location /app2 {
-    proxy_pass http://localhost:3000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    }
+# install relevant packages for Node
+sudo apt-get install python-software-properties -y
 
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
+sudo apt-get install nodejs -y
+
+sudo npm install pm2 -g
 
 # install git
 sudo apt-get install git -y
 
-# install nodejs
-
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-#create global env variable (so app vm can connect to db)
-# echo "setting environment variable DB_HOST..."
-
 # get repo with app folder - put in folder called 'repo'
+# get the app folder from Git repo
+git clone https://github.com/yjk16/aws.git
+
+cd ~/pycharmprojects/tech_230/tech230_virtualisation/tech230_AWS/aws/app
 
 # install the app (must be after db vm is finished provisioning)
+# stop all processes
+pm2 stop all
+
+npm install
 
 # seed database
+node seeds/seed/js
 
-
-
-# set up reverse proxy
-
-can check changes have been made:
-
-`cat provision_app.sh`
-
-to check permissions:
-
-`ls -l`
-
-to change permission so everyone can execute the file:
-
-`chmod +x provision_app.sh`
-
-`ls`
-
-should be green.
-
-to run the shell script:
-
-`./provision_app.sh`
-
-
-
-
+# will run in the background
+pm2 start app.js --update-env
 

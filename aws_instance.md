@@ -12,6 +12,11 @@
 
 [5. Deploying the Sparta app on EC2](https://github.com/yjk16/aws/blob/main/aws_instance.md#5-deploying-the-sparta-app-on-ec2)
 
+[6. Making an AMI of the app](https://github.com/yjk16/aws/blob/main/aws_instance.#md6-making-an-ami-of-the-app)
+
+[7. Automating reverse proxy](https://github.com/yjk16/aws/blob/main/aws_instance.#md7-automating-reverse-proxy)
+
+
 
 ### 1. Creating an Instance
 
@@ -205,6 +210,8 @@ AMI = Amazon Machine Imagine
 
  ----
 
+(The following creates a template of an instance, but not an AMI...)
+
 Tick the box of your instance, then under `Actions`, click `Image and Templates` and from there `Create template from instance`
 
 This will take you to the `Create launch template` page.
@@ -213,17 +220,27 @@ Enter a name using the naming convention and a description.
 
 Then `Create launch template`
 
-Then you can terminate the Nginx instance.  And still use the template...
+(This will save settings but not data.)
+
+----
+
+NOTE: A launch template saves settings but not the image of a disk.  It will save security groups and the type, etc... To save the data and make an image you need to make an AMI to store the data.
+
+To do this...
+
+Whilst in the instance with all the details you want saved, go to your instance and under `Actions` go to `Image and templates` then `Create image`.
+
+Enter name, using the naming convention and a description.  Then `Create image`.  This will create an AMI.
 
  ----
 
- Under `Launch instance`, `launch instance from template`
+ Under `Launch instance`, `launch instance from template` if you want to launch an instance template.
 
- Once 2/2 checks... should be able to copy and paste ip address...
-
- To the `Welcome to nginx!` page.
 
  ----
+ To launch a previously created AMI, go to `Launch instance` and under `Application and OS images` click `My AMIs` and search for the one you are looking for.
+
+----
 
  If you have two provisions, instead of using user data, can use AMIs.
 
@@ -253,13 +270,14 @@ To check manually first, enter the following commands:
 
 ### 4. Creating an AMI for the MongoDB installation
 
+Enter name, using the naming convention and a description.  Then `Create image`.  This will 
 `Create launch template`
 
 And under `User data`
 
 Add the above commands after stating the language of bash:
 
-`#!bin/bash`
+`#!/bin/bash`
 
 `sudo apt-get update -y`
 
@@ -270,6 +288,8 @@ Add the above commands after stating the language of bash:
 `sudo apt install mongodb -y`
 
 `sudo systemctl start mongodb`
+
+`sudo systemctl enable mongodb`
 
 ----
 
@@ -284,6 +304,14 @@ You can check this using:
 ----
 
 ### 5. Deploying the Sparta app on EC2
+
+Create an instance or launch an AMI with all the correct settings, including security groups.
+
+Make sure to add in the mongodb AMI `add rule` of type `Custom` with port range `27017` which is the port that mongodb operates on and put `source` as `0.0.0.0/0`. `Save rules`. `SSH` type should already be there (if you've done this before).
+
+Copy the private IP address from your mongodb instance.
+
+----
 
 In a Bash terminal cd into the directory where your app folder is:
 
@@ -303,6 +331,23 @@ You should be in the instance.
 
 `ls` to check that `app` is there.
 
+----
+
+cd into app:
+`node --version` to check which version of node is there.  It should be version 12.
+
+** Update, upgrade the system and install Nginx (if not using a previously made AMI):
+
+`sudo apt-get update -y`
+
+`sudo apt-get upgrade -y`
+
+`sudo apt-get install nginx -y`
+
+`sudo systemctl start nginx`
+
+----
+
 Add the dependencies (same as when using Vagrant):
 
 `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
@@ -312,8 +357,6 @@ Add the dependencies (same as when using Vagrant):
 `sudo npm install pm2 -g` if this doesn't work:
 
 `sudo apt install npm`
-
-cd into app:
 
 `cd app`
 
@@ -337,6 +380,16 @@ Hopefully you will see this:
 
 ![alt](pm2.png)
 
+**
+
+----
+
+`export DB_HOST=mongodb://192.168.10.150:27017/posts`
+
+but change the ip address to the private ip address you copied from your mongodb instance.
+
+`printenv DB_HOST` to check.
+
 ----
 
 You still need to change the security group to add the port `3000` so go to your instance page and under `Security` click on `Security groups` and `Edit inbound rules`.
@@ -357,121 +410,96 @@ Go to your instance and connect again by pasting your ssh key into Bash.
 
 You should be able to connect to the web browser through your instance.  If it is `https` get rid of the `s` and add `:3000`
 
-You should be connected to the Sparta App page.
+If database is cleared and seeded:
+
+`pm2 start app.js --update-env`
+
+Go back to your app instance and go to public IP address.
+
+Tap in `:3000` after the IP and you should be connected to the Sparta App page.
+
+Add `/posts` after that to reach the posts page.
 
 ----
 
 ### 6. Making an AMI of the app
-<!-- 
-Under `Launch templates`, `Modify template`, give it a name and select a security group.
 
-Under `advanced details` go to `User data`.  It should already have the following:
+NOTE: A launch template saves settings but not the image of a disk.  It will save security groups and the type, etc... To save the data and make an image you need to make an AMI to store the data.
 
-```
-#!/bin/bash
+Whilst in the instance with all the details you want saved, go to your instance and under `Actions` go to `Image and templates` then `Create image`.
 
-sudo apt update -y
-
-sudo apt upgrade -y
-
-sudo apt install nginx -y
-
-sudo systemctl start nginx
-
-sudo systemctl enable nginx
-```
-
-Modify the script and add the following:
-
-`curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -`
-
-`sudo apt-get install -y nodejs`
-
-`sudo npm install pm2 -g`
-
-`cd app`
-
-`npm install`
-
-Save the template.
+Enter name, using the naming convention and a description.  Then `Create image`.  This will create an AMI.
 
 ----
 
-To test it, go to `Launch templates` and then `Launch instance from template` making sure to choose the correct version.
-
-Connect via ssh...
-
- -->
-
+If you already have two AMI's (one for app and one for db), you should be able to use these. Go to My AMIs and click on relevant AMIs to start them and connect.
 
 ----
 
-Go to EC2 dashboard and launch an instance
+Otherwise, go to EC2 dashboard and launch an instance
 
-Go to My AMIs
+Fill out info including name, user data and check security group.
 
-Open up db_image and fill out info including name, user data and check security group.
+The db user data should have:
 
-```#!/bin/bash
+`#!/bin/bash`
 
-sudo apt update -y
+`sudo apt update -y`
 
-sudo apt upgrade -y
+`sudo apt upgrade -y`
 
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927
+`sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927`
 
-sudo apt install mongodb -y
+`sudo apt install mongodb -y`
 
-sudo systemctl start mongodb```
+`sudo systemctl start mongodb`
 
-launch instance
+Launch the instance
 
-connect to bash via ssh
+----
+
+Connect to bash via ssh
 
 `ssh -i "tech230.pem" ubuntu@ec2-54-246-247-106.eu-west-1.compute.amazonaws.com`
 
 making sure to change the ip address.
 
-Should be in the instance.
+Should now be in the instance.
 
-can go through checks manually
+Can go through checks manually...
 
-check by entering:
+Or check by entering:
 
 `sudo systemctl status mongodb`
-q to get out of that
+`q` to get out of that
 
-cd /etc
+`cd /etc`
 
-ls
+`ls`
 
-sudo nano mongodg.conf
+`sudo nano mongodb.conf`
 
-change bind_ip to 0.0.0.0
+Change the bind_ip to 0.0.0.0
 
-exit and save.
+Exit and save.
 
-then restart the mongo server:
+Then restart the mongo server:
 
-sudo systemctl restart mongodb
+`sudo systemctl restart mongodb`
 
-sudo systemctl enable mongodb
+`sudo systemctl enable mongodb`
 
-go back to AWS db machine
+Go back to AWS db machine and in `security`, go to `security groups` in order to edit inbound rules.
 
-in security, go to security groups
+`add rule`
 
-edit inbound rules
-
-add rule
-
-change port range to `27017` and source to anywhere.
+Change port range to `27017` and source to anywhere.
 
 ----
 
 Launch an app instance by going to the app AMI
 
-in a Bash terminal, cd into directory where app folder is:
+In a Bash terminal, cd into directory where app folder is:
 
 then paste:
 
@@ -481,11 +509,10 @@ Then connect via Bash using the ssh key:
 
     ssh -i "~/.ssh/tech230.pem" ubuntu@ec2-54-216-148-79.eu-west-1.compute.amazonaws.com
 
-should be in instance
+Should be in instance
 
+May need to add to `user data` if creating a new instance:
 
-may need:
-<!-- 
 `sudo apt update -y`
 
 `sudo apt upgrade -y`
@@ -496,46 +523,62 @@ may need:
 
 `sudo systemctl enable nginx`
 
-`sudo systemctl status nginx` -->
+`sudo systemctl status nginx`
 
-ls to check app is there
+----
 
-node --version
+`ls` to check app is there
 
-to check node version.
+`node --version` to check node version.
 
-enter:
+Change the the environment variable:
 
-export DB_HOST=mongodb://192.168.10.150:27017/posts
+`sudo nano .bashrc`
 
-but change the ip address.  Either from the db bash or on the AWS db instance page.
+Enter at the end:
 
-printenv to check
+`export DB_HOST=mongodb://192.168.10.150:27017/posts`
+but change the ip address.  (Can get this either from the db bash or on the AWS db instance page.)
+
+`printenv` to check
 
 ![alt](dbhost.png)
 
-cd into app
+----
 
-npm install
+`cd` into `app` (twice if needed):
 
+`npm install`
+
+If this doesn't work, try:
+
+`sudo apt install npm`
 
 Database should be cleared and seeded:
 
 ![alt](cleared.png)
 
-pm2 start app.js --update-env
+`pm2 start app.js --update-env` so the app can run in the background.
 
 ![alt](online.png)
 
-go to AWS app instance:
+----
 
-go to public ip address
+Go to AWS app instance:
 
-
+go to public ip address and see if it works.  And with `/posts`
 
 ----
 
-### Automating reverse proxy
+Go to your instance and under `Actions` go to `Image and templates` then `Create image`.
+
+Enter name, using the naming convention and a description.  Then `Create image`.  This will create an AMI.
+
+----
+
+### 7. Automating reverse proxy
+
+Make sure your db instance is up-to-date and connected.
 
 Set up an app instance, using a community version of Ubuntu.
 
@@ -543,44 +586,68 @@ Connect to Bash using ssh key
 
 Now you are in the instance.
 
-ls
+`ls`
 
 should be empty
 
 create a file:
 
-`touch provisionapp.sh`
+`touch provisionapp.sh` which will include the commands for the reverse proxy.
 
-`sudo nano provisionapp.sh`
+`sudo nano provisionapp.sh` to edit the file.
 
 and enter the commands:
 
-```
-#!/bin/bash
+`#!/bin/bash`
 
-sudo apt-get update -y
+`sudo apt-get update -y`
 
-sudo apt-get upgrade -y
+`sudo apt-get upgrade -y`
 
-sudo apt-get install nginx -y
+`sudo apt-get install nginx -y`
 
-sudo nano /etc/nginx/sites-available/default
+`sudo sed -i 's+try_files $uri $uri/ =404;+proxy_pass http://localhost:3000;+' /etc/nginx/sites-available/default`
 
-sed -i 'try_files $uri $uri/ =404;proxy_pass http://localhost:3000;'
+`echo 'export DB_HOST=mongodb://<mongodb_private_ip/posts' >> .bashrc`
 
-sudo nginx -t
+`source .bashrc`
 
-sudo systemctl restart nginx
+`sudo systemctl restart nginx`
+
+`sudo systemctl enable nginx`
+
+`sudo apt-get install python-software-properties -y`
+
+`curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
+
+`sudo apt-get install nodejs -y`
+
+`sudo npm install pm2 -g`
+
+`sudo apt-get install git -y`
+
+`git clone https://github.com/yjk16/aws.git`
+
+`cd ~/pycharmprojects/tech_230/tech230_virtualisation/tech230_AWS/aws/app`
+
+`pm2 stop all`
+
+`npm install`
+
+`node seeds/seed/js`
+
+`pm2 start app.js --update-env`
+
+Save this.
 
 ----
-
-then
 
 `ls -l` to check permissions
 
 `chmod +x provisionapp.sh` to add execution permissions.
 
-`ls` should be green.
+`ls` and here `provisionapp.sh` should be green.
 
 `./provisionapp.sh` to execute app and run provision file.
 
+----
