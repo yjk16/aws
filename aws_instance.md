@@ -608,7 +608,7 @@ and enter the commands:
 
 `sudo sed -i 's+try_files $uri $uri/ =404;+proxy_pass http://localhost:3000;+' /etc/nginx/sites-available/default`
 
-`echo 'export DB_HOST=mongodb://<mongodb_private_ip/posts' >> .bashrc`
+`echo 'export DB_HOST=mongodb://192.168.10.150/posts' >> .bashrc` # ip address is private db address
 
 `source .bashrc`
 
@@ -628,7 +628,7 @@ and enter the commands:
 
 `git clone https://github.com/yjk16/aws.git`
 
-`cd ~/pycharmprojects/tech_230/tech230_virtualisation/tech230_AWS/aws/app`
+`cd /home/ubuntu/app`
 
 `pm2 stop all`
 
@@ -644,7 +644,7 @@ Save this.
 
 `ls -l` to check permissions
 
-`chmod +x provisionapp.sh` to add execution permissions.
+`chmod +x provisionapp.sh` to add execution permissions. This gives everyone permission.
 
 `ls` and here `provisionapp.sh` should be green.
 
