@@ -92,6 +92,17 @@ Put in keypair and Network settings...
 
 Put in user data.
 
+`#!/bin/bash`
+`cd /home/ubuntu/repo`
+
+`npm install`
+
+`pm2 start app.js`
+
+----
+
+Create an instance using this template.
+
 `Create launch template`
 
 ----
@@ -135,6 +146,8 @@ Load balancing:
 Keep on `Application Load Balancer`
 
 Put in `Load balancer name` using naming convention and using hypens not underscore. Remember there is a limited number of characters you can use.
+
+For `Load balancer scheme` click `Internet-facing`.
 
 For `Listeners and routing` `Create a new target group` put TG at the end so you know it's for the target group.  Remember to use the naming convention and use hypens with correct number of characters.
 
@@ -190,9 +203,13 @@ Review
 
 `Create Auto Scaling Group`
 
+![alt](asg.png)
+
 ----
 
-Go to `Load balancers` and you can copy the DNS name (up to .com) then put this into a web browser to check.  Should go to the Nginx webpage.
+Go to `Load balancers` and you can copy the DNS name (up to .com) then put this into a web browser to check.  Should go to the Sparta webpage:
+
+![alt](spartapage.png)
 
 ----
 

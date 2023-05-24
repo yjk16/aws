@@ -1,4 +1,4 @@
-# Steps to create a VPC with a public subnet
+## Steps to create a VPC with a public subnet
 
 ### 1. Create VPC
 
@@ -10,17 +10,21 @@ Name tag `tech230-yoonji-nginx-vpc`
 
 Under `IPv4 CIDR`, put `10.0.0.0/16`
 
+![alt](createvpn.png)
+
 ----
 
 ### 2. Internet Gateway
 
 Find `Internet gateways` on the left and `Create internet gateway`.
 
-Put in name using the naming convention `tech230-yoonji-nginx-IGW` where IGW = internet gateway.
+Put in name using the naming convention, for example `tech230-yoonji-nginx-IGW`, where IGW = internet gateway.
 
 ![alt](gateway.png)
 
 In green is the success message.  You can `Attach to a VPC` from here.
+
+![alt](igwcreated.png)
 
 ----
 
@@ -30,15 +34,19 @@ In green is the success message.  You can `Attach to a VPC` from here.
 
 Enter your name to search for and attach to the created VPC with your name.
 
+<!-- ![alt](attachtovpc.png) -->
+
 And `Attach Internet gateway`
+
+![alt](igwsuccess.png)
 
 ----
 
 ### 4. Public subnet
 
-Under `Subnet` click `Create subnet`
+CLick `Subnet` on the left and then click `Create subnet`
 
-Have to select VPC. Can search your name again.
+You have to select VPC. Can search your name again to find the one you want.
 
 ![alt](createsubnet.png)
 
@@ -50,19 +58,21 @@ Fill in the subnet settings:
 
 ![alt](subnetsuccess.png)
 
+Can add more subnets here if needed.
+
 ----
 
 ### 5. Route tables
 
-Go to `Route tables` in contents on left. Then `Create route table`.
+Go to `Route tables` in the dropdown contents on left. Then `Create route table`.
 
 Fill out details:
 
 ![alt](createroutetable.png)
 
-And create.
+And `Create route table`.
 
-![alt](routesuccess.png)
+![alt](routetablesuccess.png)
 
 ----
 
@@ -76,9 +86,9 @@ Under `explicit subnet associations`, `edit subnet associations`
 
 Find yours by searching your name:
 
-![alt](mysubnet.png)
+![alt](mysubnet.png) and click the box next to it.
 
-Only associate public subnet for public route table.
+NOTE: only associate public subnet for public route table.
 
 `Save associations`:
 
@@ -92,7 +102,7 @@ Should look like:
 
 ### 7. Linking the internet gateway to public route table
 
-Go to `Routes` in `Route tables` and `Edit routes` and `Add route`
+Go to `Routes` in `Route tables` then `Edit routes` and `Add route`
 
 Choose under `Destination` `0.0.0.0/0` and under Target `Internet Gateway` and your internet gateway should come up. Select this.
 
@@ -116,7 +126,7 @@ Fill out all the usual data.
 
 `Edit Network settings`
 
-From the VPC, search for your name and select this one.
+For the `VPC`, search for your name and select this one.
 
 Under `Auto-assign public IP`, click `Enable`.
 
@@ -124,7 +134,7 @@ Under `Auto-assign public IP`, click `Enable`.
 
 You won't be able to select an exisiting security group so will need to `Create security group`.
 
-`Add security group rule` for `HTTP` for `anywhere` and for port `3000` for `anywhere` (although if reverse proxy is working, shouldn't need it.)
+`Add security group rule` for `HTTP` for `anywhere` and for port `3000` for `anywhere` (although if reverse proxy is working, this shouldn't be needed.)
 
 Usually for SSH, you would change `Source type` to `My IP` for better security.
 

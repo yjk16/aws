@@ -317,7 +317,7 @@ In a Bash terminal cd into the directory where your app folder is:
 
 then paste
 
-`scp -i "~/.ssh/tech230.pem" -r app ubuntu@ec2-<ip address of your instance>.eu-west-1.compute.amazonaws.com:/home/ubuntu`
+`scp -i "~/.ssh/tech230.pem" -r app ubuntu@ec2-<ip address of your instance>.eu-west-1.compute.amazonaws.com:/home/ubuntu` to copy over the app folder into the instance.
 
 In this case:
 
