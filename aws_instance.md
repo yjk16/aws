@@ -17,7 +17,6 @@
 [7. Automating reverse proxy](https://github.com/yjk16/aws/blob/main/aws_instance.#md7-automating-reverse-proxy)
 
 
-
 ### 1. Creating an Instance
 
 Log into the AWS console and make sure you are set to the Ireland (eu-west-1) region setting.
