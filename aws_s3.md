@@ -1,5 +1,11 @@
 # AWS S3
 
+To use AWS CLI and Python Boto3 first make sure you have installed the right packages.
+
+Into a terminal enter:
+
+`pip install awscli boto3`
+
 ### To connect via terminal:
 
 In terminal:
@@ -16,9 +22,13 @@ Enter `eu-west-1`
 
 Enter `json`
 
-Then `aws s3 ls` to see a list of s3s
+Then `aws s3 ls` to see a list of s3s:
+
+![alt](bucketlist.png)
 
 You are now connected.
+
+`aws ec2 describe-instances` will return all the EC2 instances running on AWS in json format.
 
 ----
 
@@ -103,3 +113,76 @@ Where the arguments are ("name of bucket", "name of file being copied", "name of
 
 Where the arguments are ("name of bucket", "name of file"):
 `s3.Object("tech230-yoonji-boto", "sampletext.txt").delete()`
+
+----
+
+### To set up an EC2 Ubuntu instance with AWS CLI, Python boto3
+
+1. Make sure they have the right dependencies.  So once you've created an instance and ssh'ed in:
+
+If you haven't already done it (via user data, for exmaple):
+
+`sudo apt get update -y`
+`sudo apt get upgrade -y`
+
+Python comes with Ubuntu Server so it should already be installed but to check:
+
+`python --version`
+
+And if not:
+
+`sudo apt install python3`
+
+And:
+
+`sudo apt install python3-pip`
+
+Can check to see:
+
+`pip --version`
+
+`python --version` or `python3 --version`
+
+If these are both there, install boto3:
+
+`pip install boto3`
+
+To check:
+
+`pip show boto3`
+
+Then install awscli:
+
+`sudo apt install awscli`
+
+----
+
+After this, you should be able to log in using:
+
+`aws configure` and entering Access Key ID, Secret Access Key, Default region name and default output format.
+
+Can do:
+
+`aws s3 ls` to check.  Should list the s3 buckets:
+
+![alt](awsls.png)
+
+Then create a bucket:
+
+`aws s3 mb s3://tech230-yj-bucket --region eu-west-1`
+
+And upload to that bucket:
+
+`aws s3 cp sampletext.txt s3://tech230-yj-bucket`
+
+If you go to AWS S3 - Buckets, then search for yours, your file should be there:
+
+![alt](yjbucket.png)
+
+Then to to upload data and retrieve content and then delete it:
+
+![alt](upload.png)
+
+If you check on your AWS console, it should be gone!
+
+![alt](deleted.png)
