@@ -1,5 +1,19 @@
 # AWS S3
 
+### What is AWS S3
+
+(info from docs.aws.amazon.com)
+
+S3 stands for Simple Secure Storage.  Customers can use this service to store and protect any amount of data for a range of use cases, such as data lakes, websites, mobile applications, backup and restore, archive, enterprise applications, IoT devices and big data anayltics.
+
+----
+
+### How AWS S3 provides high availabiliy
+
+High availability starts with infrastructure that is resilient and resistent to disruption.  AWS S3 delivers high durability, availabity, and performant object storage.
+
+----
+
 To use AWS CLI and Python Boto3 first make sure you have installed the right packages.
 
 Into a terminal enter:
