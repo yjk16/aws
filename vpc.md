@@ -101,6 +101,8 @@ And `Create route table`.
 
 ----
 
+### 6. Associate subnets
+
 Under `subnet associations`
 
 ![alt](subnetassociate.png)
