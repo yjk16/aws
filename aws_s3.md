@@ -10,7 +10,7 @@ S3 stands for Simple Secure Storage.  Customers can use this service to store an
 
 ### How AWS S3 provides high availabiliy
 
-High availability starts with infrastructure that is resilient and resistent to disruption.  AWS S3 delivers high durability, availabity, and performant object storage.
+High availability starts with infrastructure that is resilient and resistent to disruption.  AWS S3 delivers high durability, availability, and performant object storage.
 
 ----
 
