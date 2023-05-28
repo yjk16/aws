@@ -12,9 +12,9 @@
 
 [5. Deploying the Sparta app on EC2](https://github.com/yjk16/aws/blob/main/aws_instance.md#5-deploying-the-sparta-app-on-ec2)
 
-[6. Making an AMI of the app](https://github.com/yjk16/aws/blob/main/aws_instance.#md6-making-an-ami-of-the-app)
+[6. Making an AMI of the app](https://github.com/yjk16/aws/blob/main/aws_instance.md#6-making-an-ami-of-the-app)
 
-[7. Automating reverse proxy](https://github.com/yjk16/aws/blob/main/aws_instance.#md7-automating-reverse-proxy)
+[7. Automating reverse proxy](https://github.com/yjk16/aws/blob/main/aws_instance.md#7-automating-reverse-proxy)
 
 
 ### 1. Creating an Instance
