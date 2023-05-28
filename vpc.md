@@ -4,7 +4,7 @@
 
 A VPC (Virtual Private Cloud) is a private cloud hosted within a public cloud.
 
-![alt](vpcpic.jpg)
+![alt](v.jpg)
 
 Imagine you are about to attend a performance at a multi-stage venue.
 
@@ -26,7 +26,7 @@ Name tag `tech230-yoonji-nginx-vpc`
 
 Under `IPv4 CIDR`, put `10.0.0.0/16`
 
-![alt](createvpn.png)
+![alt](createvpc.png)
 
 ----
 
@@ -38,7 +38,8 @@ Put in name using the naming convention, for example `tech230-yoonji-nginx-IGW`,
 
 ![alt](gateway.png)
 
-In green is the success message.  You can `Attach to a VPC` from here.
+In green is the 
+success message.  You can `Attach to a VPC` from here.
 
 ![alt](igwcreated.png)
 
