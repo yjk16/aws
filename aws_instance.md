@@ -133,6 +133,8 @@ And you are now in the VM.
 
 ----
 
+Enter the following commands into your Bash terminal:
+
 `sudo apt update -y`
 
 `sudo apt upgrade -y`
@@ -233,15 +235,15 @@ Enter name, using the naming convention and a description.  Then `Create image`.
 
  ----
 
- Under `Launch instance`, `launch instance from template` if you want to launch an instance template.
-
+ Under `Launch instance`, `launch instance from template` if you want to launch an instance from a template.
 
  ----
+
  To launch a previously created AMI, go to `Launch instance` and under `Application and OS images` click `My AMIs` and search for the one you are looking for.
 
 ----
 
- If you have two provisions, instead of using user data, can use AMIs.
+ If you have two provisions, instead of using user data, you can use AMIs.
 
  ----
 
@@ -264,6 +266,12 @@ To check manually first, enter the following commands:
 `sudo apt install mongodb -y`
 
 `sudo systemctl start mongodb`
+
+If you're sure this all works, you can put it in user data.
+
+Whilst in the instance with all the details you want saved, go to your instance and under `Actions` go to `Image and templates` then `Create image`.
+
+Enter a name, using the naming convention, and a description.  Then `Create image`.  This will create an AMI.
 
 ----
 
