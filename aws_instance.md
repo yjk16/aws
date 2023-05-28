@@ -650,3 +650,5 @@ Save this.
 `./provisionapp.sh` to execute app and run provision file.
 
 ----
+
+Can use `cat /var/log/cloud-init-output.log` to check log.

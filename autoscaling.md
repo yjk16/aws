@@ -1,5 +1,9 @@
 # Autoscaling
 
+### What is it?
+
+Autoscaling is the process of automating the sizing up (or down) of resources.
+
 Scaling up: more resources (storage, CPU power, RAM) for the VMs
 
 Scaling out: requires more VMs

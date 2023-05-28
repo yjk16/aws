@@ -16,7 +16,7 @@ sudo systemctl start mongodb
 sudo systemctl enable mongodb
 
 # Edit the Mongo config file to allow access from any IP
-sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongodb.conf
+sudo sed -i 's+127.0.0.1+0.0.0.0+g' /etc/mongodb.conf
 
 # Restart and re-enable Mongo
 sudo systemctl restart mongodb

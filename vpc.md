@@ -1,4 +1,4 @@
-## Steps to create a VPC with a public subnet
+## Steps to create a VPC with 2 tier architecture (with a public subnet and private subnet)
 
 ### 1. Create VPC
 
@@ -42,11 +42,11 @@ And `Attach Internet gateway`
 
 ----
 
-### 4. Public subnet
+### 4. Create subnets
 
 CLick `Subnet` on the left and then click `Create subnet`
 
-You have to select VPC. Can search your name again to find the one you want.
+You have to select a VPC. Can search your name again to find the one you want.
 
 ![alt](createsubnet.png)
 
@@ -54,11 +54,19 @@ Fill in the subnet settings:
 
 ![alt](subnetsettings.png)
 
-`Create subnet` which should lead you to:
+You will want to `Add a new subnet` after this, to add your private subnet.  Be sure to label this correctly so you can tell the difference.
+
+If you want to spread the availability zones, can pick eu-west-1b for the private subnet.
+
+For the CIDR block, you will need to put a different number, so `10.0.3.0/24`
+
+Then `Create subnet` which should lead you to:
 
 ![alt](subnetsuccess.png)
 
-Can add more subnets here if needed.
+NOTE: The above photo only shows the public subnet.
+
+You can add more subnets here if needed.
 
 ----
 
@@ -88,7 +96,7 @@ Find yours by searching your name:
 
 ![alt](mysubnet.png) and click the box next to it.
 
-NOTE: only associate public subnet for public route table.
+NOTE: only associate the public subnet for public route table!
 
 `Save associations`:
 
@@ -97,6 +105,8 @@ NOTE: only associate public subnet for public route table.
 Should look like:
 
 ![alt](sub.png)
+
+NOTE: the above only shows the public subnet.  The private subnet would be listed under `Subnets without explicit associations`.
 
 ----
 
@@ -114,25 +124,41 @@ Choose under `Destination` `0.0.0.0/0` and under Target `Internet Gateway` and y
 
 ----
 
-### 8. Create Nginx VM
+### 8. Create Nginx App and Mongodb VMs
 
-The last step is to create the app vm.
+The last step is to create the VMs.
 
 Go to instances.  Create a new instance.
 
-Use a suitable name, like `tech230-yoonji-nginx-vpc`and select a suitable AMI under community AMIs.
+Use a suitable name, like `tech230-yoonji-nginx-vpc`and select a suitable AMI under community AMIs.  Or here, if you have an AMI that you are sure works (with added bindip changes in the mongodb AMI and the environment changes in the nginx AMI in this example) you can select the approprite AMIs under `My AMIs`.
+
+You will want to have the Mongodb one running first.
 
 Fill out all the usual data.
 
-`Edit Network settings`
+Make sure to `Edit Network settings`
 
-For the `VPC`, search for your name and select this one.
+And for the `VPC`, search for your name and select this one.
+
+Make sure under `Subnet` you pick the private subnet here.
+
+You won't be able to select an exisiting security group so will need to `Create security group`.
+
+Make sure to add a `security group rule` for port 27017.
+
+When you are happy with all the details, you can start the instance.
+
+----
+
+For the nginx app instance, you can follow the same steps.
+
+Under `Edit network settings` remember to select the appropriate `VPC`.
+
+Make sure under `Subnet` you pick the public subnet here.
 
 Under `Auto-assign public IP`, click `Enable`.
 
 ![alt](net.png)
-
-You won't be able to select an exisiting security group so will need to `Create security group`.
 
 `Add security group rule` for `HTTP` for `anywhere` and for port `3000` for `anywhere` (although if reverse proxy is working, this shouldn't be needed.)
 
