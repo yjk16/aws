@@ -1,4 +1,20 @@
-## Steps to create a VPC with 2 tier architecture (with a public subnet and private subnet)
+# VPC
+
+### What is it?
+
+A VPC (Virtual Private Cloud) is a private cloud hosted within a public cloud.
+
+![alt](vpcpic.jpg)
+
+Imagine you are about to attend a performance at a multi-stage venue.
+
+You would enter through the doorway (Internet Gateway), before being directed at the box office (Public Route Table) in which direction to go to, to find the correct space to watch your performance.
+
+When you get to the desired room (Public Subnet), you can watch the performance on stage (Website/ App) without a second thought to all the organising and work that happens backstage (Private Subnet) in order for all the things you're seeing to run as smoothly as possible.
+
+----
+
+## Steps to create a VPC with 2 tier architecture (i.e. a public subnet and a private subnet)
 
 ### 1. Create VPC
 
